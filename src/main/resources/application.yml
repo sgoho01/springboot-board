@@ -1,0 +1,22 @@
+server:
+  port: 9090
+
+spring:
+  h2:
+    console:
+      enabled: true                       # H2 웹 콘솔을 사용
+      path: /board                        # 콘솔의 경로
+
+  datasource:
+    driver-class-name: org.h2.Driver      # H2 드라이버 설정
+    url: jdbc:h2:mem:board;MODE=MySQL
+    username: board
+    password: board
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
