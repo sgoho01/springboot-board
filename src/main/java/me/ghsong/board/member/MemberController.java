@@ -1,8 +1,7 @@
-package me.ghsong.board.service;
+package me.ghsong.board.member;
 
 import lombok.RequiredArgsConstructor;
-import me.ghsong.board.repository.MemberRepository;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author : Song.gunho
@@ -10,10 +9,12 @@ import org.springframework.stereotype.Service;
  * Date: 2019-11-07
  * Copyright(©) 2019 by ATOSTUDY.
  */
-@Service
+@RestController
 @RequiredArgsConstructor
-public class MemberService {
+@RequestMapping("/members")
+public class MemberController {
 
+    private final MemberService memberService;
     private final MemberRepository memberRepository;
 
 

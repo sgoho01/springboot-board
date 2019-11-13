@@ -1,9 +1,9 @@
 package me.ghsong.board;
 
-import me.ghsong.board.entity.Board;
-import me.ghsong.board.entity.Member;
-import me.ghsong.board.repository.BoardRepository;
-import me.ghsong.board.repository.MemberRepository;
+import me.ghsong.board.board.Board;
+import me.ghsong.board.member.Member;
+import me.ghsong.board.board.BoardRepository;
+import me.ghsong.board.member.MemberRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

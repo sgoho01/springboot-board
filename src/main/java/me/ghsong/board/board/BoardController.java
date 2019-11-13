@@ -1,9 +1,7 @@
-package me.ghsong.board.controller;
+package me.ghsong.board.board;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.ghsong.board.entity.Board;
-import me.ghsong.board.service.BoardService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;

@@ -4,14 +4,14 @@ server:
 spring:
   h2:
     console:
-      enabled: true                       # H2 웹 콘솔을 사용
-      path: /board                        # 콘솔의 경로
+      enabled: true                       # use H2 web Console
+      path: /board                        # web path
 
   datasource:
-    driver-class-name: org.h2.Driver      # H2 드라이버 설정
+    driver-class-name: org.h2.Driver      # H2 driver setting
     url: jdbc:h2:mem:board;MODE=MySQL
     username: board
-    password: board
+    password:
   jpa:
     hibernate:
       ddl-auto: update

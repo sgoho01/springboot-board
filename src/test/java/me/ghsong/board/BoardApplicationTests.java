@@ -1,7 +1,7 @@
 package me.ghsong.board;
 
-import me.ghsong.board.entity.Member;
-import me.ghsong.board.service.MemberService;
+import me.ghsong.board.member.Member;
+import me.ghsong.board.member.MemberService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

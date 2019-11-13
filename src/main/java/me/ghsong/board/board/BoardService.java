@@ -1,8 +1,8 @@
-package me.ghsong.board.service;
+package me.ghsong.board.board;
 
 import lombok.RequiredArgsConstructor;
-import me.ghsong.board.entity.Board;
-import me.ghsong.board.repository.BoardRepository;
+import me.ghsong.board.board.Board;
+import me.ghsong.board.board.BoardRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
