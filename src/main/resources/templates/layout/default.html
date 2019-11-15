@@ -7,11 +7,18 @@
         <div id="wrapper">
             <div th:replace="fragments/header :: headerFragment"></div>
 
-            <div id="content-wrapper" class="d-flex flex-column" layout:fragment="content"></div>
-
+            <div id="content-wrapper" class="d-flex flex-column" layout:fragment="content">
+                
+            </div>
             <footer th:replace="fragments/footer :: footerFragment"></footer>
         </div>
-    </body>
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
 
     <th:block th:replace="fragments/script :: scriptFragment"></th:block>
+    </body>
+
 </html>
