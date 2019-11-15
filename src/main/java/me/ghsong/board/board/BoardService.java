@@ -1,8 +1,6 @@
 package me.ghsong.board.board;
 
 import lombok.RequiredArgsConstructor;
-import me.ghsong.board.board.Board;
-import me.ghsong.board.board.BoardRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,5 +23,11 @@ public class BoardService {
         int page = (pageable.getPageNumber() == 0) ? 0 : pageable.getPageNumber() - 1;
         pageable = PageRequest.of(page, 10, Sort.by("boardSeq").descending());
         return boardRepository.findAll(pageable);
+    }
+
+    public Board insertBoard(Board board){
+        board.setCurrentTime();
+        boardRepository.save(board);
+        return board;
     }
 }

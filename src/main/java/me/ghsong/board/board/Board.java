@@ -31,7 +31,7 @@ public class Board {
     @Column(name = "BOARD_CONTENTS", length = 20, nullable = false)
     private String boardContents;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MEMBER_SEQ")
     private Member member;
 

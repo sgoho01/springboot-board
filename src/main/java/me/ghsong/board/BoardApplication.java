@@ -23,6 +23,8 @@ public class BoardApplication {
         return args -> {
             IntStream.rangeClosed(1, 154).forEach(i -> {
                 Member member = Member.builder()
+                        .memberId("tester " + i)
+                        .memberPassword("tester " + i)
                         .memberName("tester " + i)
                         .memberMobile("010-1234-" + i)
                         .build();

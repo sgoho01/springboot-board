@@ -24,6 +24,12 @@ public class Member {
     @Column(name = "MEMBER_SEQ")
     private Long memberSeq;
 
+    @Column(name = "MEMBER_ID", length = 20, nullable = false)
+    private String memberId;
+
+    @Column(name = "MEMBER_PASSWORD", length = 20, nullable = false)
+    private String memberPassword;
+
     @Column(name = "MEMBER_NAME", length = 20, nullable = false)
     private String memberName;
 
@@ -49,9 +55,10 @@ public class Member {
     }
 
     @Builder
-    public Member(String memberName, String memberMobile) {
+    public Member(String memberId, String memberPassword, String memberName, String memberMobile) {
+        this.memberId = memberId;
+        this.memberPassword = memberPassword;
         this.memberName = memberName;
         this.memberMobile = memberMobile;
-        setCurrentTime();
     }
 }

@@ -24,6 +24,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
+
     @GetMapping
     public String boardView(@PageableDefault Pageable pageable, Model model) {
 
@@ -40,4 +41,5 @@ public class BoardController {
     public String boardForm(){
         return "form";
     }
+
 }
