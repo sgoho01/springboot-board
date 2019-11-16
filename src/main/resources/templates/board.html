@@ -13,76 +13,76 @@
 <th:block layout:fragment="script">
 </th:block>
 
-<div layout:fragment="content">
+<!-- Begin Page Content -->
+<div class="container-fluid" layout:fragment="content">
+    <!-- Page Heading -->
+    <h1 class="h3 mt-2 mb-2 text-gray-800">GHSONG</h1>
+    <p class="mb-4">아기 상어한테 물리면 아파욧</p>
 
-    <!-- Begin Page Content -->
-    <div class="container-fluid">
-        <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">GHSONG</h1>
-        <p class="mb-4">아기 상어한테 물리면 아파욧</p>
-
-        <!-- DataTales Example -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                        <tr>
-                            <th>글 번호</th>
-                            <th>글 제목</th>
-                            <th>글 내용</th>
-                            <th>글쓴이</th>
-                            <th>글 번호</th>
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        <tr>
-                            <th>푸터 : 글 번호</th>
-                            <th>푸터 : 글 제목</th>
-                            <th>푸터 : 글 내용</th>
-                            <th>푸터 : 글쓴이</th>
-                            <th>푸터 : 글 번호</th>
-                        </tr>
-                        </tfoot>
-                        <tbody>
-                        <tr th:each="board : ${boardList}">
-                            <th th:text="${board.boardSeq}"></th>
-                            <th th:text="${board.boardTitle}"></th>
-                            <th th:text="${board.boardContents}"></th>
-                            <th th:text="${board.member.memberName}"></th>
-                            <th th:text="${board.member.memberMobile}"></th>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">게시글</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>글 번호</th>
+                        <th>글 제목</th>
+                        <th>글 내용</th>
+                        <th>글쓴이</th>
+                        <th>글 번호</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>푸터 : 글 번호</th>
+                        <th>푸터 : 글 제목</th>
+                        <th>푸터 : 글 내용</th>
+                        <th>푸터 : 글쓴이</th>
+                        <th>푸터 : 글 번호</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    <tr th:each="board : ${boardList}">
+                        <th th:text="${board.boardSeq}"></th>
+                        <th th:text="${board.boardTitle}"></th>
+                        <th th:text="${board.boardContents}"></th>
+                        <th th:text="${board.member.memberName}"></th>
+                        <th th:text="${board.member.memberMobile}"></th>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-
 
     <hr/>
     <a type="button" class="btn btn-outline-secondary float-right" th:href="@{/boards/form}">글쓰기</a>
 
 
-    <ul class="pagination" th:with="start=${T(Math).floor(boardList.number/10)*10 + 1}, last=(${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages})">
+    <ul class="pagination"
+        th:with="start=${T(Math).floor(boardList.number/10)*10 + 1}, last=(${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages})">
         <li class="page-item">
             <a th:href="@{/boards(page=1)}" aria-label="First" class="page-link">
                 <span aria-hidden="true">First</span>
             </a>
         </li>
         <li th:class="${boardList.first} ? 'disabled page-item' : 'page-item'">
-            <a th:href="${boardList.first} ? '#' :@{/boards(page=${boardList.number})}" aria-label="Previous" class="page-link">
+            <a th:href="${boardList.first} ? '#' :@{/boards(page=${boardList.number})}" aria-label="Previous"
+               class="page-link">
                 <span aria-hidden="true">&lt;</span>
             </a>
         </li>
-        <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == boardList.number + 1} ? 'active page-item' : 'page-item'">
+        <li th:each="page: ${#numbers.sequence(start, last)}"
+            th:class="${page == boardList.number + 1} ? 'active page-item' : 'page-item'">
             <a th:text="${page}" th:href="@{/boards(page=${page})}" class="page-link"></a>
         </li>
         <li class="page-item">
-            <a th:href="${boardList.last} ? '#' : @{/boards(page=${boardList.number + 2})}" aria-label="Next" class="page-link">
+            <a th:href="${boardList.last} ? '#' : @{/boards(page=${boardList.number + 2})}" aria-label="Next"
+               class="page-link">
                 <span aria-hidden="true">&gt;</span>
             </a>
         </li>
@@ -92,7 +92,5 @@
             </a>
         </li>
     </ul>
-
 </div>
-
 </html>
