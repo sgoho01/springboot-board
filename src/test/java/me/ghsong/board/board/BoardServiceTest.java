@@ -1,6 +1,7 @@
 package me.ghsong.board.board;
 
-import org.hamcrest.Matcher;
+import me.ghsong.board.entity.Board;
+import me.ghsong.board.service.BoardService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

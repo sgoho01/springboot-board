@@ -3,94 +3,162 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/default">
 
-<title>board</title>
+<head>
+    <title>Board</title>
 
-<!-- board.html 고유 CSS 추가 -->
-<th:block layout:fragment="css">
-</th:block>
+</head>
 
-<!-- board.html 고유 script 추가 -->
-<th:block layout:fragment="script">
-</th:block>
 
-<!-- Begin Page Content -->
-<div class="container-fluid" layout:fragment="content">
-    <!-- Page Heading -->
-    <h1 class="h3 mt-2 mb-2 text-gray-800">GHSONG</h1>
-    <p class="mb-4">아기 상어한테 물리면 아파욧</p>
+<th:block layout:fragment="content">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <h1 class="h3 mt-2 mb-2 text-gray-800">GHSONG</h1>
+        <p class="mb-4">아기 상어한테 물리면 아파욧</p>
 
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">게시글</h6>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                    <tr>
-                        <th>글 번호</th>
-                        <th>글 제목</th>
-                        <th>글 내용</th>
-                        <th>글쓴이</th>
-                        <th>글 번호</th>
-                    </tr>
-                    </thead>
-                    <tfoot>
-                    <tr>
-                        <th>푸터 : 글 번호</th>
-                        <th>푸터 : 글 제목</th>
-                        <th>푸터 : 글 내용</th>
-                        <th>푸터 : 글쓴이</th>
-                        <th>푸터 : 글 번호</th>
-                    </tr>
-                    </tfoot>
-                    <tbody>
-                    <tr th:each="board : ${boardList}">
-                        <th th:text="${board.boardSeq}"></th>
-                        <th th:text="${board.boardTitle}"></th>
-                        <th th:text="${board.boardContents}"></th>
-                        <th th:text="${board.member.memberName}"></th>
-                        <th th:text="${board.member.memberMobile}"></th>
-                    </tr>
-                    </tbody>
-                </table>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">게시글</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>글 번호</th>
+                            <th>글 제목</th>
+                            <th>글 내용</th>
+                            <th>글쓴이</th>
+                            <th>글 번호</th>
+                        </tr>
+                        </thead>
+
+                        <!--                        <tfoot>-->
+                        <!--                        <tr>-->
+                        <!--                            <th>푸터 : 글 번호</th>-->
+                        <!--                            <th>푸터 : 글 제목</th>-->
+                        <!--                            <th>푸터 : 글 내용</th>-->
+                        <!--                            <th>푸터 : 글쓴이</th>-->
+                        <!--                            <th>푸터 : 글 번호</th>-->
+                        <!--                        </tr>-->
+                        <!--                        </tfoot>-->
+
+                        <!--<tbody>
+                        <tr th:each="board : ${boardList}">
+                            <th th:text="${board.boardSeq}"></th>
+                            <th th:text="${board.boardTitle}"></th>
+                            <th th:text="${board.boardContents}"></th>
+                            <th th:text="${board.member.memberName}"></th>
+                            <th th:text="${board.member.memberMobile}"></th>
+                        </tr>
+                        </tbody>-->
+                    </table>
+                </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col align-self-end">
+                <a class="btn btn-secondary btn-icon-split float-right" th:href="@{/boards/form}">
+                    <span class="text">글쓰기</span>
+                </a>
+            </div>
+        </div>
+
+        <hr/>
+
+
+        <!-- 페이징
+        <ul class="pagination"
+            th:with="start=${T(Math).floor(boardList.number/10)*10 + 1}, last=(${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages})">
+            <li class="page-item">
+                <a th:href="@{/boards(page=1)}" aria-label="First" class="page-link">
+                    <span aria-hidden="true">First</span>
+                </a>
+            </li>
+            <li th:class="${boardList.first} ? 'disabled page-item' : 'page-item'">
+                <a th:href="${boardList.first} ? '#' :@{/boards(page=${boardList.number})}" aria-label="Previous"
+                   class="page-link">
+                    <span aria-hidden="true">&lt;</span>
+                </a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(start, last)}"
+                th:class="${page == boardList.number + 1} ? 'active page-item' : 'page-item'">
+                <a th:text="${page}" th:href="@{/boards(page=${page})}" class="page-link"></a>
+            </li>
+            <li class="page-item">
+                <a th:href="${boardList.last} ? '#' : @{/boards(page=${boardList.number + 2})}" aria-label="Next"
+                   class="page-link">
+                    <span aria-hidden="true">&gt;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a th:href="@{/boards(page=${boardList.totalPages})}" aria-label="Last" class="page-link">
+                    <span aria-hidden="true">Last</span>
+                </a>
+            </li>
+        </ul>-->
     </div>
+</th:block>
+<!-- board.html 고유 script 추가 -->
+<th:block layout:fragment="pageScript">
 
-    <hr/>
-    <a type="button" class="btn btn-outline-secondary float-right" th:href="@{/boards/form}">글쓰기</a>
+    <script>
+        $(document).ready(function () {
+            var tables = $('#dataTable').dataTable({
+                // 한 페이지에 기본으로 보여줄 항목 수
+                pageLength: 10,
+                // 페이징 처리 여부
+                paginate: true,
+                pagingType: "full_numbers",
+                // 한 페이지에 보여줄 항목 수 변경가능여부
+                bLengthChange: true,
+                //"bLengthChange" 리스트 항목을 구성할 옵션
+                lengthMenu: [3, 5, 10, 20],
+                // 자동 컬럼 폭을 계산하여 반영
+                bAutoWidth: true,
+                // 로딩 표시 여부
+                processing: true,
+                // 항목의 정렬 사용여부
+                ordering: true,
+                // 그리드 내에서 이루어지는 모든 상황들(검색, 페이징, 정렬 등)에 대한 처리를 서버측에서 수행 여부
+                serverSide: true,
+                // 글로벌 searching 기능
+                searching: true,
+                ajax: {
+                    "url": "/boards/lists",
+                    "type": "GET",
+                    "data": function (d) {
+                        d.page = (d.start / d.length) + 1;
+                    },
+                    "dataFilter": function (data) {
+                        var json = jQuery.parseJSON(data);
+                        json.data = json.content;
+                        json.recordsTotal = json.totalElements;
+                        json.recordsFiltered = json.totalElements;
+                        return JSON.stringify(json);
+                    }
+                },
+                columns: [
+                    {data: "boardSeq", name: "boardSeq", title: "글번호"},
+                    {data: "boardTitle", name: "boardTitle", title: "글제목"},
+                    {data: "boardContents", name: "boardContents", title: "글내용"},
+                    {data: "member.memberName", name: "memberName", title: "글쓴이"},
+                    {data: "member.memberMobile", name: "memberMobile", title: "글쓴이 번호"}
+                ],
+                columnDefs: [
+                    {
+                        "targets": [0, 1, 2, 3, 4],
+                        "visible": true
+                    }
+                ]
+            });
 
 
-    <ul class="pagination"
-        th:with="start=${T(Math).floor(boardList.number/10)*10 + 1}, last=(${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages})">
-        <li class="page-item">
-            <a th:href="@{/boards(page=1)}" aria-label="First" class="page-link">
-                <span aria-hidden="true">First</span>
-            </a>
-        </li>
-        <li th:class="${boardList.first} ? 'disabled page-item' : 'page-item'">
-            <a th:href="${boardList.first} ? '#' :@{/boards(page=${boardList.number})}" aria-label="Previous"
-               class="page-link">
-                <span aria-hidden="true">&lt;</span>
-            </a>
-        </li>
-        <li th:each="page: ${#numbers.sequence(start, last)}"
-            th:class="${page == boardList.number + 1} ? 'active page-item' : 'page-item'">
-            <a th:text="${page}" th:href="@{/boards(page=${page})}" class="page-link"></a>
-        </li>
-        <li class="page-item">
-            <a th:href="${boardList.last} ? '#' : @{/boards(page=${boardList.number + 2})}" aria-label="Next"
-               class="page-link">
-                <span aria-hidden="true">&gt;</span>
-            </a>
-        </li>
-        <li class="page-item">
-            <a th:href="@{/boards(page=${boardList.totalPages})}" aria-label="Last" class="page-link">
-                <span aria-hidden="true">Last</span>
-            </a>
-        </li>
-    </ul>
-</div>
+        });
+    </script>
+
+</th:block>
+
 </html>

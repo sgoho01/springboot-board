@@ -18,6 +18,13 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        format_sql: true
+        format_sql: true                  # Pretty Query
   thymeleaf:
     cache: false
+logging:
+  level:
+    root: WARN
+    me.ghsong.board: DEBUG
+    org.springframework.web: ERROR
+    org.springframework.security: WARN
+    org.hibernate.type: trace             # Query ? -> view

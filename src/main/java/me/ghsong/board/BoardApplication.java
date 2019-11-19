@@ -1,9 +1,10 @@
 package me.ghsong.board;
 
-import me.ghsong.board.board.Board;
-import me.ghsong.board.member.Member;
-import me.ghsong.board.board.BoardRepository;
-import me.ghsong.board.member.MemberRepository;
+import me.ghsong.board.entity.Board;
+import me.ghsong.board.entity.Member;
+import me.ghsong.board.repository.BoardRepository;
+import me.ghsong.board.repository.MemberRepository;
+import me.ghsong.board.service.MemberService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,22 +20,38 @@ public class BoardApplication {
     }
 
     @Bean
-    public CommandLineRunner insertTestData(MemberRepository memberRepository, BoardRepository boardRepository) {
+    public CommandLineRunner insertTestData(MemberService memberService, BoardRepository boardRepository) {
         return args -> {
-            IntStream.rangeClosed(1, 154).forEach(i -> {
-                Member member = Member.builder()
+            Member admin = Member.builder()
+                    .memberId("admin")
+                    .memberPassword("admin")
+                    .memberName("관리자")
+                    .memberMobile("010-0000-0000")
+                    .build();
+            memberService.joinMember(admin);
+
+            Member member = Member.builder()
+                    .memberId("member")
+                    .memberPassword("member")
+                    .memberName("사용자")
+                    .memberMobile("010-0000-0000")
+                    .build();
+            memberService.joinMember(member);
+
+            IntStream.rangeClosed(1, 13).forEach(i -> {
+                Member members = Member.builder()
                         .memberId("tester " + i)
                         .memberPassword("tester " + i)
                         .memberName("tester " + i)
                         .memberMobile("010-1234-" + i)
                         .build();
 
-                memberRepository.save(member);
+                memberService.joinMember(members);
 
                 Board board = Board.builder()
                         .boardTitle("test" + i)
                         .boardContents("contents " + i)
-                        .member(member)
+                        .member(members)
                         .build();
 
                 boardRepository.save(board);

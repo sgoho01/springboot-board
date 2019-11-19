@@ -1,4 +1,4 @@
-package me.ghsong.board.member;
+package me.ghsong.board.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -24,16 +24,17 @@ public class Member {
     @Column(name = "MEMBER_SEQ")
     private Long memberSeq;
 
-    @Column(name = "MEMBER_ID", length = 20, nullable = false)
+    @Column(name = "MEMBER_ID", length = 20, nullable = false, unique = true)
     private String memberId;
 
-    @Column(name = "MEMBER_PASSWORD", length = 20, nullable = false)
+    @Setter
+    @Column(name = "MEMBER_PASSWORD", length = 100, nullable = false)
     private String memberPassword;
 
     @Column(name = "MEMBER_NAME", length = 20, nullable = false)
     private String memberName;
 
-    @Column(name = "MEMBER_MOBILE", length = 20, nullable = false, unique = true)
+    @Column(name = "MEMBER_MOBILE", length = 20, nullable = false)
     private String memberMobile;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

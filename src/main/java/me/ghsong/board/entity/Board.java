@@ -1,8 +1,7 @@
-package me.ghsong.board.board;
+package me.ghsong.board.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import me.ghsong.board.member.Member;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

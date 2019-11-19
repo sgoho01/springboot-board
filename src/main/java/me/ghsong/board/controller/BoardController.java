@@ -1,10 +1,13 @@
-package me.ghsong.board.board;
+package me.ghsong.board.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.ghsong.board.entity.Board;
+import me.ghsong.board.service.BoardService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,15 +34,23 @@ public class BoardController {
         Page<Board> boardList = boardService.getBoardList(pageable);
         model.addAttribute("boardList", boardList);
 
-        log.info("총 element 수 : {}, 전체 page 수 : {}, 페이지에 표시할 element 수 : {}, 현재 페이지 index : {}, 현재 페이지의 element 수 : {}",
+        log.debug("총 element 수 : {}, 전체 page 수 : {}, 페이지에 표시할 element 수 : {}, 현재 페이지 index : {}, 현재 페이지의 element 수 : {}",
                 boardList.getTotalElements(), boardList.getTotalPages(), boardList.getSize(), boardList.getNumber(), boardList.getNumberOfElements());
 
         return "board";
+    }
+
+    @GetMapping("/lists")
+    public ResponseEntity boardLists(@PageableDefault Pageable pageable){
+        Page<Board> boardList = boardService.getBoardList(pageable);
+        log.debug("●●●●● lists : {}", boardList);
+        return ResponseEntity.ok(boardList);
     }
 
     @GetMapping("/form")
     public String boardForm(){
         return "form";
     }
+
 
 }

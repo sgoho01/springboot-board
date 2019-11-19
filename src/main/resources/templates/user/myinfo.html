@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout/default">
+
+<head>
+    <title>form</title>
+</head>
+
+<!-- board.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+</th:block>
+
+<!-- board.html 고유 script 추가 -->
+<th:block layout:fragment="script">
+</th:block>
+
+<div layout:fragment="content">
+    <h1>내정보</h1>
+    <div sec:authorize="isAuthenticated()">
+        Principal: <span sec:authentication="principal">PrincipalString</span><br />
+        Principal.username: <span sec:authentication="principal.username">username</span><br />
+        Principal.password: <span sec:authentication="principal.password">password</span><br />
+        Principal.memberName: <span sec:authentication="principal.memberName">memberName</span><br />
+        Principal.memberMobile: <span sec:authentication="principal.memberMobile">memberMobile</span><br />
+        HasRole(USER): <span sec:authorize="hasRole('ROLE_USER')">YES</span><br />
+        HasRole(ADMIN): <span sec:authorize="hasRole('ROLE_ADMIN')">YES</span><br/>
+    </div>
+</div>
+
+</html>

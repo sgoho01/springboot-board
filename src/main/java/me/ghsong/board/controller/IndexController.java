@@ -1,21 +1,25 @@
-package me.ghsong.board.login;
+package me.ghsong.board.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author : Song.gunho
  * <p>
- * Date: 2019-11-13
+ * Date: 2019-11-18
  * Copyright(©) 2019 by ATOSTUDY.
  */
 @Controller
-@RequestMapping("/")
-public class LoginController {
+public class IndexController {
 
-    @GetMapping
+    @GetMapping("/")
     public String login(){
-        return "login";
+        return "board";
     }
+
+    @GetMapping("/denied")
+    public String denied() {
+        return "layout/denied";
+    }
+
 }

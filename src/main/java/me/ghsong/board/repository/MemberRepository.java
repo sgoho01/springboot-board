@@ -1,8 +1,10 @@
-package me.ghsong.board.member;
+package me.ghsong.board.repository;
 
-import me.ghsong.board.member.Member;
+import me.ghsong.board.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 /**
  * @author : Song.gunho
@@ -12,4 +14,11 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
+
+    /**
+     * 아이디로 사용자 조회
+     * @param memberId
+     * @return
+     */
+    Optional<Member> findByMemberId(String memberId);
 }
