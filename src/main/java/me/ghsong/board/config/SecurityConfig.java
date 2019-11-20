@@ -57,20 +57,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // 페이지 권한 설정
                 .antMatchers("/admin/**").hasRole("ADMIN")                                 // ADMIN 롤을 가진 사용자 접근가능
-                .antMatchers("/members/myinfo").permitAll()         // ADMIN, MEMBER 롤 중 하나라도 가진 사용자 접근가능
+                .antMatchers("/members/**").hasAnyRole("MEMBER", "ADMIN")          // ADMIN, MEMBER 롤 중 하나라도 가진 사용자 접근가능
                 .antMatchers("/**").permitAll()                                            // 모든권한 접근 가능
             .and() // 로그인 설정
                 .formLogin()
                 .loginPage("/login")                                                                    // 로그인 뷰 페이지 URL
-//                .loginProcessingUrl("/login")                                                           // 로그인 POST 처리 URL
-                .defaultSuccessUrl("/boards")                                                           // 로그인이 성공했을 때 이동되는 페이지
+                .loginProcessingUrl("/login")                                                           // 로그인 POST 처리 URL
+                .defaultSuccessUrl("/boards")                                                          // 로그인이 성공했을 때 이동되는 페이지
                 .failureUrl("/login-error")                                                             // 로그인 실패 시 이동할 페이지 URL
                 .usernameParameter("memberId")                                                          // 로그인 form에서 아이디는 name=username인 input을 기본, 파라미터 변경 가능
                 .passwordParameter("memberPassword")
                 .permitAll()
             .and() // 로그아웃 설정
-                .logout()                                                                               // 기본적으로 "/logout"에 접근하면 HTTP 세션을 제거
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))                // 로그아웃 URL을 다른 URL로 변경시
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))                    // 로그아웃 URL
                 .logoutSuccessUrl("/login")                                                             // 로그아웃 성공했을 때 이동되는 페이지
                 .invalidateHttpSession(true)                                                            // HTTP 세션을 초기화하는 작업
             .and()

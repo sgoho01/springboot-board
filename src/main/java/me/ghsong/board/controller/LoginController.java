@@ -6,7 +6,6 @@ import me.ghsong.board.repository.MemberRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * @author : Song.gunho
@@ -24,18 +23,18 @@ public class LoginController {
     @GetMapping("/login")
     public String loginForm(){
         log.debug("LOGIN");
-        return "login";
+        return "login/login";
     }
 
     @GetMapping("/login-error")
     public String loginError(Model model){
         model.addAttribute("loginError", true);
-        return "login";
+        return "login/login";
     }
 
     @GetMapping("/join")
     public String join(){
-        return "user/join";
+        return "member/join";
     }
 
 }

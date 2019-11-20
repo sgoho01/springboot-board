@@ -13,8 +13,8 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
         <!-- Page Heading -->
-        <h1 class="h3 mt-2 mb-2 text-gray-800">GHSONG</h1>
-        <p class="mb-4">아기 상어한테 물리면 아파욧</p>
+        <h1 class="h3 mt-2 mb-2 text-gray-800">게시판</h1>
+        <p class="mb-4">아기 상어한테 물리면 아파요 ~</p>
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
@@ -33,26 +33,6 @@
                             <th>글 번호</th>
                         </tr>
                         </thead>
-
-                        <!--                        <tfoot>-->
-                        <!--                        <tr>-->
-                        <!--                            <th>푸터 : 글 번호</th>-->
-                        <!--                            <th>푸터 : 글 제목</th>-->
-                        <!--                            <th>푸터 : 글 내용</th>-->
-                        <!--                            <th>푸터 : 글쓴이</th>-->
-                        <!--                            <th>푸터 : 글 번호</th>-->
-                        <!--                        </tr>-->
-                        <!--                        </tfoot>-->
-
-                        <!--<tbody>
-                        <tr th:each="board : ${boardList}">
-                            <th th:text="${board.boardSeq}"></th>
-                            <th th:text="${board.boardTitle}"></th>
-                            <th th:text="${board.boardContents}"></th>
-                            <th th:text="${board.member.memberName}"></th>
-                            <th th:text="${board.member.memberMobile}"></th>
-                        </tr>
-                        </tbody>-->
                     </table>
                 </div>
             </div>
@@ -113,9 +93,9 @@
                 paginate: true,
                 pagingType: "full_numbers",
                 // 한 페이지에 보여줄 항목 수 변경가능여부
-                bLengthChange: true,
+                bLengthChange: false,
                 //"bLengthChange" 리스트 항목을 구성할 옵션
-                lengthMenu: [3, 5, 10, 20],
+                // lengthMenu: [3, 5, 10, 20],
                 // 자동 컬럼 폭을 계산하여 반영
                 bAutoWidth: true,
                 // 로딩 표시 여부
@@ -125,7 +105,7 @@
                 // 그리드 내에서 이루어지는 모든 상황들(검색, 페이징, 정렬 등)에 대한 처리를 서버측에서 수행 여부
                 serverSide: true,
                 // 글로벌 searching 기능
-                searching: true,
+                // searching: true,
                 ajax: {
                     "url": "/boards/lists",
                     "type": "GET",
@@ -154,8 +134,6 @@
                     }
                 ]
             });
-
-
         });
     </script>
 

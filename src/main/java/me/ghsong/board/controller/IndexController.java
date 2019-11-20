@@ -14,7 +14,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String login(){
-        return "board";
+        return "board/board";
     }
 
     @GetMapping("/denied")

@@ -29,7 +29,7 @@ public class MemberController {
     @GetMapping("/myinfo")
     public String myinfo(Principal principal){
 //        log.debug("principal : {}", principal.toString());
-        return "user/myinfo";
+        return "member/myinfo";
     }
 
 }

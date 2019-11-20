@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -27,8 +26,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
-
-    @GetMapping
+    /*@GetMapping
     public String boardView(@PageableDefault Pageable pageable, Model model) {
 
         Page<Board> boardList = boardService.getBoardList(pageable);
@@ -37,19 +35,24 @@ public class BoardController {
         log.debug("총 element 수 : {}, 전체 page 수 : {}, 페이지에 표시할 element 수 : {}, 현재 페이지 index : {}, 현재 페이지의 element 수 : {}",
                 boardList.getTotalElements(), boardList.getTotalPages(), boardList.getSize(), boardList.getNumber(), boardList.getNumberOfElements());
 
-        return "board";
-    }
+        return "board/board";
+    }*/
 
-    @GetMapping("/lists")
-    public ResponseEntity boardLists(@PageableDefault Pageable pageable){
-        Page<Board> boardList = boardService.getBoardList(pageable);
-        log.debug("●●●●● lists : {}", boardList);
-        return ResponseEntity.ok(boardList);
+    @GetMapping
+    public String pageBoard(){
+        return "board/board";
     }
 
     @GetMapping("/form")
-    public String boardForm(){
-        return "form";
+    public String boardForm() {
+        return "board/form";
+    }
+
+    @GetMapping("/lists")
+    public ResponseEntity boardLists(@PageableDefault Pageable pageable) {
+        Page<Board> boardList = boardService.getBoardList(pageable);
+        log.debug("Board list : {}", boardList);
+        return ResponseEntity.ok(boardList);
     }
 
 
