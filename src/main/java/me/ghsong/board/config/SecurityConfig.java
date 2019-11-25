@@ -17,7 +17,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
  * @author : Song.gunho
  * <p>
  * Date: 2019-11-18
- * Copyright(©) 2019 by ATOSTUDY.
  */
 @Configuration
 @EnableWebSecurity
@@ -58,7 +57,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 페이지 권한 설정
                 .antMatchers("/admin/**").hasRole("ADMIN")                                 // ADMIN 롤을 가진 사용자 접근가능
                 .antMatchers("/members/**").hasAnyRole("MEMBER", "ADMIN")          // ADMIN, MEMBER 롤 중 하나라도 가진 사용자 접근가능
-                .antMatchers("/**").permitAll()                                            // 모든권한 접근 가능
+                .antMatchers("/boards").permitAll()                                        // 모든권한 접근 가능
+                .antMatchers("/boards/**").hasAnyRole("MEMBER", "ADMIN")
+                .antMatchers("/**").permitAll()
             .and() // 로그인 설정
                 .formLogin()
                 .loginPage("/login")                                                                    // 로그인 뷰 페이지 URL

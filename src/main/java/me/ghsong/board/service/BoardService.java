@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
  * @author : Song.gunho
  * <p>
  * Date: 2019-11-08
- * Copyright(©) 2019 by ATOSTUDY.
  */
 @Service
 @RequiredArgsConstructor

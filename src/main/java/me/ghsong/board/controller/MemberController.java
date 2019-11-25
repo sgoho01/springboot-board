@@ -14,7 +14,6 @@ import java.security.Principal;
  * @author : Song.gunho
  * <p>
  * Date: 2019-11-07
- * Copyright(©) 2019 by ATOSTUDY.
  */
 @Controller
 @RequiredArgsConstructor

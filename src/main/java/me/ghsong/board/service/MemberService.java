@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author : Song.gunho
  * <p>
  * Date: 2019-11-07
- * Copyright(©) 2019 by ATOSTUDY.
  */
 @Service
 @RequiredArgsConstructor

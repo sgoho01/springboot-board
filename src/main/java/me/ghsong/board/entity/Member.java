@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
  * @author : Song.gunho
  * <p>
  * Date: 2019-11-07
- * Copyright(©) 2019 by ATOSTUDY.
  */
 @Entity
 @Table(name = "MEMBER")

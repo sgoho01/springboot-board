@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @author : Song.gunho
  * <p>
  * Date: 2019-11-13
- * Copyright(©) 2019 by ATOSTUDY.
  */
 @Controller
 @RequiredArgsConstructor
@@ -22,18 +21,20 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginForm(){
-        log.debug("LOGIN");
+        log.info("Login Form");
         return "login/login";
     }
 
     @GetMapping("/login-error")
     public String loginError(Model model){
+        log.info("Login Form :: Login Error");
         model.addAttribute("loginError", true);
         return "login/login";
     }
 
     @GetMapping("/join")
     public String join(){
+        log.info("Join Form");
         return "member/join";
     }
 
