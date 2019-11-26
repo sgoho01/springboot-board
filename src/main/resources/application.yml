@@ -5,13 +5,13 @@ spring:
   h2:
     console:
       enabled: true                       # use H2 web Console
-      path: /board                        # web path
+      path: /console                           # web path
 
   datasource:
     driver-class-name: org.h2.Driver      # H2 driver setting
     url: jdbc:h2:mem:board;MODE=MySQL
     username: board
-    password:
+    password: board
   jpa:
     hibernate:
       ddl-auto: update
@@ -25,6 +25,6 @@ logging:
   level:
     root: WARN
     me.ghsong.board: DEBUG
-    org.springframework.web: ERROR
-    org.springframework.security: WARN
+    org.springframework.web: DEBUG
+    org.springframework.security: ERROR
     org.hibernate.type: trace             # Query ? -> view

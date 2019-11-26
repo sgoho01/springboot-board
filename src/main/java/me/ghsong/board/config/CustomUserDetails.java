@@ -1,4 +1,4 @@
-package me.ghsong.board.entity;
+package me.ghsong.board.config;
 
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,7 +16,7 @@ import java.util.Collection;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomUser implements UserDetails {
+public class CustomUserDetails implements UserDetails {
 
     private String username;
     private String password;
@@ -28,14 +28,16 @@ public class CustomUser implements UserDetails {
 
     private String memberName;
     private String memberMobile;
+    private Long memberSeq;
 
     @Builder
-    public CustomUser(String username, String password, String memberName, String memberMobile, Collection<? extends GrantedAuthority> authorities) {
+    public CustomUserDetails(String username, String password, String memberName, String memberMobile, Long memberSeq, Collection<? extends GrantedAuthority> authorities) {
         this.username = username;
         this.password = password;
         this.memberName = memberName;
         this.memberMobile = memberMobile;
         this.authorities = authorities;
+        this.memberSeq = memberSeq;
         this.isEnabled = true;
         this.isAccountNonExpired = true;
         this.isAccountNonLocked = true;

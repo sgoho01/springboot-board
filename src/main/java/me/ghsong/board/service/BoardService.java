@@ -23,11 +23,11 @@ public class BoardService {
     public Page<Board> getBoardList(Pageable pageable){
         int page = (pageable.getPageNumber() == 0) ? 0 : pageable.getPageNumber() - 1;
         pageable = PageRequest.of(page, 10, Sort.by("boardSeq").descending());
-        return boardRepository.findAll(pageable);
+        return boardRepository.findAllByStatus(pageable, "Y");
     }
 
     public Board insertBoard(Board board){
-        board.setCurrentTime();
+        board.setCreateColumn();
         boardRepository.save(board);
         return board;
     }

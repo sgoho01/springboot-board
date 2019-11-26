@@ -2,19 +2,18 @@ package me.ghsong.board.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.ghsong.board.entity.CustomUser;
+import me.ghsong.board.config.CustomUserDetails;
 import me.ghsong.board.entity.Member;
 import me.ghsong.board.entity.Role;
 import me.ghsong.board.repository.MemberRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,7 @@ public class LoginService implements UserDetailsService {
 
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
         Member member = optionalMember.get();
-        log.debug("◆◆◆◆◆ member : {}", member.toString());
+        log.debug("◆◆◆◆◆ member 1 : {}", member.toString());
 
         List<GrantedAuthority> authorities = new ArrayList<>();
 
@@ -50,11 +49,12 @@ public class LoginService implements UserDetailsService {
         log.debug("◆◆◆◆◆ authorities : {}", authorities.toString());
 
 //        return new User(member.getMemberId(), member.getMemberPassword(), authorities);
-        return CustomUser.builder()
+        return CustomUserDetails.builder()
                 .username(member.getMemberId())
                 .password(member.getMemberPassword())
                 .memberName(member.getMemberName())
                 .memberMobile(member.getMemberMobile())
+                .memberSeq(member.getMemberSeq())
                 .authorities(authorities)
                 .build();
     }

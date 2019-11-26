@@ -48,37 +48,6 @@
 
         <hr/>
 
-
-        <!-- 페이징
-        <ul class="pagination"
-            th:with="start=${T(Math).floor(boardList.number/10)*10 + 1}, last=(${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages})">
-            <li class="page-item">
-                <a th:href="@{/boards(page=1)}" aria-label="First" class="page-link">
-                    <span aria-hidden="true">First</span>
-                </a>
-            </li>
-            <li th:class="${boardList.first} ? 'disabled page-item' : 'page-item'">
-                <a th:href="${boardList.first} ? '#' :@{/boards(page=${boardList.number})}" aria-label="Previous"
-                   class="page-link">
-                    <span aria-hidden="true">&lt;</span>
-                </a>
-            </li>
-            <li th:each="page: ${#numbers.sequence(start, last)}"
-                th:class="${page == boardList.number + 1} ? 'active page-item' : 'page-item'">
-                <a th:text="${page}" th:href="@{/boards(page=${page})}" class="page-link"></a>
-            </li>
-            <li class="page-item">
-                <a th:href="${boardList.last} ? '#' : @{/boards(page=${boardList.number + 2})}" aria-label="Next"
-                   class="page-link">
-                    <span aria-hidden="true">&gt;</span>
-                </a>
-            </li>
-            <li class="page-item">
-                <a th:href="@{/boards(page=${boardList.totalPages})}" aria-label="Last" class="page-link">
-                    <span aria-hidden="true">Last</span>
-                </a>
-            </li>
-        </ul>-->
     </div>
 </th:block>
 <!-- board.html 고유 script 추가 -->
@@ -86,7 +55,9 @@
 
     <script>
         $(document).ready(function () {
-            var tables = $('#dataTable').dataTable({
+
+            // DataTable
+            var tables = $('#dataTable').DataTable({
                 // 한 페이지에 기본으로 보여줄 항목 수
                 pageLength: 10,
                 // 페이징 처리 여부
@@ -101,11 +72,14 @@
                 // 로딩 표시 여부
                 processing: true,
                 // 항목의 정렬 사용여부
-                ordering: true,
+                ordering: false,
                 // 그리드 내에서 이루어지는 모든 상황들(검색, 페이징, 정렬 등)에 대한 처리를 서버측에서 수행 여부
-                serverSide: true,
+                bServerSide: true,
                 // 글로벌 searching 기능
                 // searching: true,
+
+                // ajax: '/boards/lists',
+
                 ajax: {
                     "url": "/boards/lists",
                     "type": "GET",
@@ -133,6 +107,13 @@
                         "visible": true
                     }
                 ]
+            });
+
+
+            // DataTable Row Click
+            $("#dataTable tbody").on('click', 'tr', function () {
+                var data = tables.row(this).data();
+                window.location = "/boards/" + data.boardSeq;
             });
         });
     </script>

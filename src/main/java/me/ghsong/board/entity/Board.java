@@ -2,6 +2,8 @@ package me.ghsong.board.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,34 +18,32 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Board {
+@DynamicUpdate
+public class Board extends BaseEntity{
 
     @Id
     @Column(name = "BOARD_SEQ")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardSeq;
 
+    @Setter
     @Column(name = "BOARD_TITLE", length = 20, nullable = false)
     private String boardTitle;
 
-    @Column(name = "BOARD_CONTENTS", length = 20, nullable = false)
+    @Setter
+    @Column(name = "BOARD_CONTENTS", nullable = false)
     private String boardContents;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MEMBER_SEQ")
     private Member member;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "CREATE_AT")
-    private LocalDateTime createdAt;
+    @Setter
+    @Column(name = "STATUS")
+    private String status;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "UPDATED_AT")
-    private LocalDateTime updatedAt;
-
-    public void setCurrentTime() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+    public void setCreateColumn() {
+        this.status = "Y";
     }
 
     @Builder
@@ -51,6 +51,8 @@ public class Board {
         this.boardTitle = boardTitle;
         this.boardContents = boardContents;
         this.member = member;
-        setCurrentTime();
+        setCreateColumn();
     }
+
+
 }

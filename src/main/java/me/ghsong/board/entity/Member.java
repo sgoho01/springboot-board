@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,24 +35,6 @@ public class Member {
 
     @Column(name = "MEMBER_MOBILE", length = 20, nullable = false)
     private String memberMobile;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "CREATE_AT")
-    private LocalDateTime createdAt;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "UPDATED_AT")
-    private LocalDateTime updatedAt;
-
-    public void setCurrentTime() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    public void update(Member member) {
-        this.memberName = member.getMemberName();
-        this.updatedAt = LocalDateTime.now();
-    }
 
     @Builder
     public Member(String memberId, String memberPassword, String memberName, String memberMobile) {

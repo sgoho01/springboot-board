@@ -55,11 +55,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 // 페이지 권한 설정
+                .antMatchers("/boards", "/boards/lists", "/console/**", "/**").permitAll()        // 모든권한 접근 가능
                 .antMatchers("/admin/**").hasRole("ADMIN")                                 // ADMIN 롤을 가진 사용자 접근가능
                 .antMatchers("/members/**").hasAnyRole("MEMBER", "ADMIN")          // ADMIN, MEMBER 롤 중 하나라도 가진 사용자 접근가능
-                .antMatchers("/boards").permitAll()                                        // 모든권한 접근 가능
                 .antMatchers("/boards/**").hasAnyRole("MEMBER", "ADMIN")
-                .antMatchers("/**").permitAll()
             .and() // 로그인 설정
                 .formLogin()
                 .loginPage("/login")                                                                    // 로그인 뷰 페이지 URL
@@ -77,6 +76,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 // 403 예외처리 핸들링
                 .exceptionHandling().accessDeniedPage("/denied");                                        // 권한이 없을 때 이동되는 페이지
+
+        http.csrf().disable();
+        http.headers().frameOptions().sameOrigin();
     }
 
     @Override

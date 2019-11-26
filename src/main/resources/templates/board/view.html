@@ -4,7 +4,7 @@
       layout:decorator="layout/default">
 
 <head>
-    <title>form</title>
+    <title>view</title>
 </head>
 
 <!-- board.html 고유 CSS 추가 -->
@@ -19,8 +19,7 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <h1 class="h3 mt-2 mb-2 text-gray-800">게시판</h1>
-        <p class="mb-4" th:if="${boardSeq} == null">게시글 등록</p>
-        <p class="mb-4" th:unless="${boardSeq} == null">게시글 수정</p>
+        <p class="mb-4">상세보기</p>
 
         <div class="row">
             <div class="col-6">
@@ -28,21 +27,22 @@
                     <input type="hidden" name="boardSeq" id="boardSeq" th:value="${boardSeq}"/>
                     <div class="form-group">
                         <label for="boardTitle">제목</label>
-                        <input type="text" class="form-control" id="boardTitle" name="boardTitle" placeholder="제목" th:value="${boardTitle}">
+                        <input type="text" class="form-control" id="boardTitle" name="boardTitle" placeholder="제목" th:value="${boardTitle}" readonly>
                         <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
                             else.
                         </small>-->
                     </div>
                     <div class="form-group">
                         <label for="boardContents">내용</label>
-                        <textarea class="form-control" id="boardContents" name="boardContents" rows="5" th:text="${boardContents}"></textarea>
+                        <textarea class="form-control" id="boardContents" name="boardContents" rows="5" th:text="${boardContents}" readonly></textarea>
                     </div>
                     <!--<div class="form-check">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
                         <label class="form-check-label" for="exampleCheck1">Check me out</label>
                     </div>-->
-                    <button th:if="${boardSeq} == null" type="button" class="btn btn-primary" onclick="onSubmit()">작성</button>
-                    <button th:unless="${boardSeq} == null" type="button" class="btn btn-primary" onclick="onSubmit()">수정</button>
+                    <a type="button" class="btn btn-secondary" th:href="@{/boards}">목록</a>
+                    <a type="submit" th:if="${owener}" class="btn btn-primary" th:href="@{/boards/form/{boardSeq}(boardSeq=${boardSeq})}">수정</a>
+                    <a type="button" th:if="${owener}" class="btn btn-danger" onclick="onDelete()">삭제</a>
                 </form>
             </div>
         </div>
@@ -50,29 +50,38 @@
 </div>
 
 <script layout:fragment="pageScript">
-    function onSubmit() {
-
-        var data = $('form').serializeJSON();
-        console.log(data);
-
+    function onUpdate() {
         $.ajax({
-            type: "POST",
+            type: "GET",
             contentType: "application/json",
-            url: "/boards",
-            data: data,
+            url: "/boards/" + $("#boardSeq").val(),
             dataType: 'json',
             // async: true,
             success: function (data) {
-                // console.table(data);
                 alert(data.message);
-
-                if(data.result) window.location = "/";
+                if (data.result) window.location = "/";
             },
-            error: function (json) {
-                console.log(json);
-                alert('저장 중 오류가 발생하였습니다');
+            error: function (data) {
+                alert('수정 중 오류가 발생하였습니다');
             }
         })
+    }
+
+    function onDelete() {
+        alert("delete");
+        $.ajax({
+            type: "DELETE",
+            contentType: "application/json",
+            url: "/boards/" + $("#boardSeq").val(),
+            dataType: "json",
+            success: function (data) {
+                alert(data.message);
+                if (data.result) history.back();
+            },
+            error: function (data) {
+                alert('삭제 중 오류가 발생하였습니다');
+            }
+        });
     }
 </script>
 

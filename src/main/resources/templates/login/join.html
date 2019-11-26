@@ -23,7 +23,7 @@
                                     <h1 class="h4 text-gray-900 mb-4">회원가입</h1>
                                 </div>
                                 <form class="user" name="loginForm" id="loginForm" th:action="@{/login}" method="post">
-                                    <!--<div class="form-group">
+                                    <div class="form-group">
                                         <input type="id" class="form-control form-control-user" id="memberId"
                                                name="memberId" aria-describedby="emailHelp" placeholder="아이디">
                                     </div>
@@ -32,20 +32,16 @@
                                                id="memberPassword" name="memberPassword" placeholder="비밀번호">
                                     </div>
                                     <div class="form-group">
-                                        <div class="custom-control custom-checkbox small">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck">
-                                            <label class="custom-control-label" for="customCheck">기억하기</label>
-                                        </div>
+                                        <input type="text" class="form-control form-control-user"
+                                               id="memberName" name="memberName" placeholder="이름">
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-user btn-block">로그인</button>-->
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user"
+                                               id="memberMobile" name="memberMobile" placeholder="전화번호">
+                                    </div>
+                                    <a role="button" class="btn btn-primary btn-user btn-block" onclick="join()">가입</a>
                                 </form>
                                 <hr>
-                                <!--<div class="text-center">
-                                    <a class="small" href="">비밀번호 찾기</a>
-                                </div>
-                                <div class="text-center">
-                                    <a class="small" href="">회원가입</a>
-                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -59,6 +55,30 @@
 </div>
 <!-- 공통 스크립트-->
 <th:block th:replace="fragments/script :: scriptFragment"></th:block>
+
+<script layout:fragment="pageScript">
+
+    function join(){
+        var data = $('form').serializeJSON();
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/join",
+            data: data,
+            dataType: 'json',
+            // async: true,
+            success: function (data) {
+                alert(data.message);
+                if (data.result) window.location = "/login";
+            },
+            error: function (data) {
+                alert('수정 중 오류가 발생하였습니다');
+            }
+        })
+    }
+
+</script>
 
 </body>
 </html>
