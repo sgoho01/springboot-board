@@ -4,7 +4,7 @@
       layout:decorator="layout/default">
 
 <head>
-    <title>form</title>
+    <title>MyInfo</title>
 </head>
 
 <!-- board.html 고유 CSS 추가 -->
@@ -16,7 +16,7 @@
 </th:block>
 
 <div layout:fragment="content">
-    <h1>내정보</h1>
+    <!--<h1>내정보</h1>
     <div sec:authorize="isAuthenticated()">
         Principal: <span sec:authentication="principal">PrincipalString</span><br />
         Principal.username: <span sec:authentication="principal.username">username</span><br />
@@ -25,6 +25,31 @@
         Principal.memberMobile: <span sec:authentication="principal.memberMobile">memberMobile</span><br />
         HasRole(USER): <span sec:authorize="hasRole('ROLE_USER')">YES</span><br />
         HasRole(ADMIN): <span sec:authorize="hasRole('ROLE_ADMIN')">YES</span><br/>
+    </div>-->
+
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <h1 class="h3 mt-2 mb-2 text-gray-800">게시판</h1>
+        <p class="mb-4">내 정보</p>
+
+        <div class="row">
+            <div class="col-6">
+                <form name="boardForm" id="boardForm">
+                    <div class="form-group">
+                        <label for="memberId">ID</label>
+                        <input type="text" class="form-control" id="memberId" name="memberId" th:value="${member.memberId}">
+                    </div>
+                    <div class="form-group">
+                        <label for="memberName">이름</label>
+                        <input type="text" class="form-control" id="memberName" name="memberName" th:value="${member.memberName}">
+                    </div>
+                    <div class="form-group">
+                        <label for="memberMobile">번호</label>
+                        <input type="text" class="form-control" id="memberMobile" name="memberMobile" th:value="${member.memberMobile}">
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
