@@ -13,6 +13,7 @@ import me.ghsong.board.service.MemberService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -76,7 +77,7 @@ public class BoardController {
         return ResponseEntity.ok(boardList);
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity boardInsert(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody BoardDto boardDto) {
         log.debug("::: boardInsert :::");
@@ -121,7 +122,7 @@ public class BoardController {
         return "board/view";
     }
 
-    @DeleteMapping("/{boardSeq}")
+    @DeleteMapping(value = "/{boardSeq}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity boardDelete(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Long boardSeq) {
         log.debug("::: boardDelete :::");
 
@@ -136,6 +137,5 @@ public class BoardController {
             return ResponseEntity.ok(createResultResponse(true, "삭제 되었습니다."));
         }
     }
-
 
 }

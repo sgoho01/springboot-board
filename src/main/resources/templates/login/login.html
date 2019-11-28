@@ -26,7 +26,6 @@
                                     </div>
                                     <p th:if="${loginError}" class="text-black-200" >일치하는 정보가 없습니다.</p>
                                     <form class="user" name="loginForm" id="loginForm" th:action="@{/login}" method="post">
-                                        <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
                                         <div class="form-group">
                                             <input type="id" class="form-control form-control-user" id="memberId"
                                                    name="memberId" aria-describedby="emailHelp" placeholder="아이디">

@@ -22,24 +22,54 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">회원가입</h1>
                                 </div>
-                                <form class="user" name="loginForm" id="loginForm" th:action="@{/login}" method="post">
+                                <form class="user" name="loginForm" id="loginForm" >
                                     <div class="form-group">
-                                        <input type="id" class="form-control form-control-user" id="memberId"
-                                               name="memberId" aria-describedby="emailHelp" placeholder="아이디">
+                                        <label for="memberId">ID</label>
+                                        <div class="form-inline">
+                                            <input type="text" class="form-control form-control-user mr-3" id="memberId"
+                                                   name="memberId" aria-describedby="emailHelp" placeholder="아이디"
+                                                   title="아이디" required>
+                                            <a role="button" class="btn btn-primary" href="javascript:"
+                                               onclick="duplicateCheck()">중복확인</a>
+                                            <input type="hidden" name="isDuplicate" id="isDuplicate"/>
+                                            <small id="duplicateHelp" class="form-text text-muted text-center"></small>
+                                        </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="memberPassword">비밀번호</label>
                                         <input type="password" class="form-control form-control-user"
-                                               id="memberPassword" name="memberPassword" placeholder="비밀번호">
+                                               id="memberPassword" name="memberPassword" placeholder="비밀번호" title="비밀번호"
+                                               required>
                                     </div>
                                     <div class="form-group">
+                                        <label for="memberName">이름</label>
                                         <input type="text" class="form-control form-control-user"
-                                               id="memberName" name="memberName" placeholder="이름">
+                                               id="memberName" name="memberName" placeholder="이름" title="이름" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user"
-                                               id="memberMobile" name="memberMobile" placeholder="전화번호">
+                                        <label for="memberMobile-2">핸드폰</label>
+                                        <div class="row">
+                                            <div class="input-group col-4">
+                                                <select class="form-control custom-select" name="memberMobile-1"
+                                                        id="memberMobile-1">
+                                                    <option value="010">010</option>
+                                                    <option value="011">011</option>
+                                                    <option value="016">016</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-4">
+                                                <input type="number" size="4" class="form-control" name="memberMobile-2"
+                                                       id="memberMobile-2">
+                                            </div>
+                                            <div class="col-4">
+                                                <input type="number" size="4" class="form-control" name="memberMobile-3"
+                                                       id="memberMobile-3">
+                                            </div>
+                                            <input type="hidden" name="memberMobile" id="memberMobile">
+                                        </div>
                                     </div>
-                                    <a role="button" class="btn btn-primary btn-user btn-block" onclick="join()">가입</a>
+                                    <a role="button" class="btn btn-primary btn-user btn-block" onclick="join()" href="javascript:">가입</a>
+                                    <a role="button" class="btn btn-dark btn-user btn-block" onclick="history.back()" href="javascript:">뒤로</a>
                                 </form>
                                 <hr>
                             </div>
@@ -58,26 +88,71 @@
 
 <script layout:fragment="pageScript">
 
-    function join(){
+    function join() {
+
+        $("#memberMobile").val(
+            $("#memberMobile-1").val() + $("#memberMobile-2").val() + $("#memberMobile-3").val()
+        );
         var data = $('form').serializeJSON();
+
+
+        if (columnValidate('loginForm')) {
+            if ($("#isDuplicate").val() != "Y") {
+                alert("아이디 중복체크를 해주세요.");
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "/join",
+                data: data,
+                dataType: 'json',
+                success: function (data) {
+                    alert(data.message);
+                    if (data.result) window.location = "/login";
+                },
+                error: function (data) {
+                    console.error(data);
+                    alert('수정 중 오류가 발생하였습니다');
+                }
+            })
+        }
+    }
+
+
+    function duplicateCheck() {
+
+        if ($("#memberId").val().trim() == "") {
+            alert("ID를 입력해주세요.");
+            $("#memberId").focus();
+            return;
+        }
+
+        var data = {"memberId": $("#memberId").val()};
 
         $.ajax({
             type: "POST",
             contentType: "application/json",
-            url: "/join",
-            data: data,
+            url: "/duplicate",
             dataType: 'json',
-            // async: true,
+            data: JSON.stringify(data),
             success: function (data) {
                 alert(data.message);
-                if (data.result) window.location = "/login";
+                if (data.result){
+                    $("#isDuplicate").val("Y");
+                    $("#duplicateHelp").html("<span class='text-success'>사용 가능한 아이디 입니다.</span>");
+                }else{
+                    $("#isDuplicate").val("N");
+                    $("#duplicateHelp").html("<span class='text-danger'>사용 불가능한 아이디 입니다.</span>");
+                }
             },
             error: function (data) {
+                console.error(data);
                 alert('수정 중 오류가 발생하였습니다');
             }
         })
     }
-
 </script>
 
 </body>

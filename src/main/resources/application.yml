@@ -11,7 +11,7 @@ spring:
     driver-class-name: org.h2.Driver      # H2 driver setting
     url: jdbc:h2:mem:board;MODE=MySQL
     username: board
-    password: board
+    password:
   jpa:
     hibernate:
       ddl-auto: update
