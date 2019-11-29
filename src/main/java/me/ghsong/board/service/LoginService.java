@@ -1,6 +1,6 @@
 package me.ghsong.board.service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.ghsong.board.config.CustomUserDetails;
 import me.ghsong.board.entity.Member;
@@ -11,8 +11,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,12 +23,11 @@ import java.util.Optional;
  * Date: 2019-11-19
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class LoginService implements UserDetailsService {
 
-    private MemberRepository memberRepository;
-
+    private final MemberRepository memberRepository;
 
     @Override
     public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {

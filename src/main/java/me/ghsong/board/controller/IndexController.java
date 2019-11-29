@@ -12,13 +12,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexController {
 
     @GetMapping("/")
-    public String login(){
+    public String getLoginView(){
         return "board/board";
     }
 
     @GetMapping("/denied")
-    public String denied() {
+    public String getDeniedView() {
         return "layout/denied";
+    }
+
+    @GetMapping("/empty")
+    public String getEmptyBoardView() {
+        return "layout/empty";
     }
 
 }

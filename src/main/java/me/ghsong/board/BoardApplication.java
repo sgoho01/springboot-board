@@ -1,8 +1,10 @@
 package me.ghsong.board;
 
 import me.ghsong.board.entity.Board;
+import me.ghsong.board.entity.Comment;
 import me.ghsong.board.entity.Member;
 import me.ghsong.board.repository.BoardRepository;
+import me.ghsong.board.repository.CommentRepository;
 import me.ghsong.board.repository.MemberRepository;
 import me.ghsong.board.service.MemberService;
 import org.springframework.boot.CommandLineRunner;
@@ -20,7 +22,7 @@ public class BoardApplication {
     }
 
     @Bean
-    public CommandLineRunner insertTestData(MemberService memberService, BoardRepository boardRepository) {
+    public CommandLineRunner insertTestData(MemberService memberService, BoardRepository boardRepository, CommentRepository commentRepository) {
         return args -> {
             Member admin = Member.builder()
                     .memberId("admin")
@@ -55,7 +57,19 @@ public class BoardApplication {
                         .build();
 
                 boardRepository.save(board);
+
+                Comment comment = Comment.builder()
+                        .commentContents("댓글 " + i)
+                        .board(board)
+                        .member(member)
+                        .build();
+
+                commentRepository.save(comment);
+                commentRepository.save(comment);
             });
+
+
+
         };
     }
 

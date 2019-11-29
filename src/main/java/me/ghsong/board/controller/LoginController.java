@@ -28,27 +28,27 @@ public class LoginController {
     private final MemberService memberService;
 
     @GetMapping("/login")
-    public String loginForm() {
-        log.info("::: loginForm :::");
+    public String getLoginFormView() {
+        log.info("::: getLoginFormView :::");
         return "login/login";
     }
 
     @GetMapping("/login-error")
-    public String loginError(Model model) {
-        log.info("::: loginForm - loginError :::");
+    public String getLoginErrorView(Model model) {
+        log.info("::: getLoginErrorView :::");
         model.addAttribute("loginError", true);
         return "login/login";
     }
 
     @GetMapping("/join")
-    public String joinForm() {
-        log.info("::: joinForm :::");
+    public String getJoinFormView() {
+        log.info("::: getJoinFormView :::");
         return "login/join";
     }
 
     @PostMapping(value = "/join", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity joinMember(@RequestBody Member member) {
-        log.info("::: joinMember :::");
+    public ResponseEntity insertMember(@RequestBody Member member) {
+        log.info("::: insertMember :::");
 
         final Member checkMember = memberRepository.findByMemberId(member.getMemberId()).orElse(null);
         if (checkMember != null) {

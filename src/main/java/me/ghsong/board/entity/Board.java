@@ -34,24 +34,17 @@ public class Board extends BaseEntity{
     @Column(name = "BOARD_CONTENTS", nullable = false)
     private String boardContents;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Member.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "MEMBER_SEQ")
     private Member member;
 
-    @Setter
-    @Column(name = "STATUS")
-    private String status;
 
-    public void setCreateColumn() {
-        this.status = "Y";
-    }
 
     @Builder
     public Board(String boardTitle, String boardContents, Member member) {
         this.boardTitle = boardTitle;
         this.boardContents = boardContents;
         this.member = member;
-        setCreateColumn();
     }
 
 

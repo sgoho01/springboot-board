@@ -46,10 +46,66 @@
                 </form>
             </div>
         </div>
+
+        <!-- 댓글 -->
+        <hr/>
+
+        <div class="col-6">
+            <!-- 댓글 작성 -->
+            <div class="row">
+                <div class="col-10">
+                    <textarea name="commentContents" id="commentContents" class="form-control"></textarea>
+                </div>
+                <div class="col-2">
+                    <a role="button" class="btn btn-primary" href="javascript:" onclick="onCreate()">등록</a>
+                </div>
+            </div>
+
+            <hr/>
+
+            <!-- 댓글 리스트 -->
+            <div class="row">
+                <div class="col-12">
+                    <div th:each="comment : ${boardComments}">
+                        <p th:text="${comment.commentContents}"></p>
+                    </div>
+
+                </div>
+            </div>
+
+            <ul class="pagination" th:with="start=${T(Math).floor(boardComments.number/10)*10 + 1}, last=(${start + 9 < boardComments.totalPages ? start + 9 : boardComments.totalPages})">
+                <li class="page-item">
+                    <a th:href="@{/boards/{boardSeq}(boardSeq=${boardSeq},page=1)}" aria-label="First" class="page-link">
+                        <span aria-hidden="true">First</span>
+                    </a>
+                </li>
+                <li th:class="${boardComments.first} ? 'disabled page-item' : 'page-item'">
+                    <a th:href="${boardComments.first} ? '#' :@{/boards/{boardSeq}(boardSeq=${boardSeq},page=${boardComments.number})}" aria-label="Previous" class="page-link">
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
+                <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == boardComments.number + 1} ? 'active page-item' : 'page-item'">
+                    <a th:text="${page}" th:href="@{/boards/{boardSeq}(boardSeq=${boardSeq},page=${page})}" class="page-link"></a>
+                </li>
+                <li class="page-item">
+                    <a th:href="${boardComments.last} ? '#' : @{/boards/{boardSeq}(boardSeq=${boardSeq},page=${boardComments.number + 2})}" aria-label="Next" class="page-link">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a th:href="@{/boards/{boardSeq}(boardSeq=${boardSeq},page=${boardComments.totalPages})}" aria-label="Last" class="page-link">
+                        <span aria-hidden="true">Last</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
     </div>
 </div>
 
 <script layout:fragment="pageScript">
+    // 게시글
     function onUpdate() {
         $.ajax({
             type: "GET",
@@ -67,8 +123,8 @@
         })
     }
 
+    // 게시글
     function onDelete() {
-        alert("delete");
         $.ajax({
             type: "DELETE",
             contentType: "application/json",
@@ -77,6 +133,27 @@
             success: function (data) {
                 alert(data.message);
                 if (data.result) history.back();
+            },
+            error: function (data) {
+                alert('삭제 중 오류가 발생하였습니다');
+            }
+        });
+    }
+
+    // 댓글
+    function onCreate(){
+
+        var data = {"commentContents": $("#commentContents").val()};
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/boards/" + $("#boardSeq").val() + "/comments",
+            dataType: "json",
+            data:JSON.stringify(data),
+            success: function (data) {
+                alert(data.message);
+                if (data.result) location.reload();
             },
             error: function (data) {
                 alert('삭제 중 오류가 발생하였습니다');

@@ -15,6 +15,7 @@ import lombok.*;
 @Builder
 public class BoardDto {
 
+    private Long boardSeq;
     private String boardTitle;
     private String boardContents;
     private Long memberSeq;

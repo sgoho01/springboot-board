@@ -30,8 +30,8 @@ public class MemberController {
 
 
     @GetMapping("/myinfo")
-    public String memberMyInfo(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
-        log.info("::: memberMyInfo :::");
+    public String getMemberInfoView(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+        log.info("::: getMemberInfoView :::");
 
         if(customUserDetails == null){
             return "layout/denied";

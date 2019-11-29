@@ -2,6 +2,7 @@ package me.ghsong.board.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -28,14 +29,23 @@ public class BaseEntity {
     @Column(name = "UPDATED_AT")
     private LocalDateTime updatedAt;
 
+    @Column(name = "STATUS")
+    private String status;
 
     @PrePersist
     public void onCreate(){
         this.createdAt = LocalDateTime.now();
+        this.status = "Y";
     }
 
     @PreUpdate
     public void onUpdate(){
         this.updatedAt = LocalDateTime.now();
     }
+
+    public void onDelete(){
+        this.updatedAt = LocalDateTime.now();
+        this.status = "N";
+    }
+
 }

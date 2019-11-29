@@ -2,6 +2,7 @@ package me.ghsong.board.service;
 
 import lombok.RequiredArgsConstructor;
 import me.ghsong.board.entity.Board;
+import me.ghsong.board.entity.Comment;
 import me.ghsong.board.repository.BoardRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,8 +28,16 @@ public class BoardService {
     }
 
     public Board insertBoard(Board board){
-        board.setCreateColumn();
+        board.onCreate();
         boardRepository.save(board);
         return board;
     }
+
+    public Board updateBoard(Board board){
+        board.onUpdate();
+        boardRepository.save(board);
+        return board;
+    }
+
+
 }
