@@ -30,6 +30,10 @@ public class CommentService{
         return commentRepository.findAllByBoardAndAndStatus(pageable, boardRepository.findById(boardSeq).get(), "Y");
     }
 
+    public Comment getComment(Long commentSeq){
+        return commentRepository.findById(commentSeq).orElse(null);
+    }
+
     public Comment insertComment(Comment comment){
         comment.onCreate();
         return commentRepository.save(comment);

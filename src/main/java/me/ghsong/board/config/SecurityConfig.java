@@ -1,7 +1,7 @@
 package me.ghsong.board.config;
 
 import lombok.AllArgsConstructor;
-import me.ghsong.board.service.LoginService;
+import me.ghsong.board.config.security.LoginService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

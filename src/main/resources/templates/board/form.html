@@ -41,8 +41,8 @@
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
                         <label class="form-check-label" for="exampleCheck1">Check me out</label>
                     </div>-->
-                    <button th:if="${boardSeq} == null" type="button" class="btn btn-primary" onclick="onSubmit()">작성</button>
-                    <button th:unless="${boardSeq} == null" type="button" class="btn btn-primary" onclick="onSubmit()">수정</button>
+                    <button th:if="${boardSeq} == null" type="button" class="btn btn-primary" onclick="insertBoard()">작성</button>
+                    <button th:unless="${boardSeq} == null" type="button" class="btn btn-primary" onclick="updateBoard()">수정</button>
                 </form>
             </div>
         </div>
@@ -50,7 +50,35 @@
 </div>
 
 <script layout:fragment="pageScript">
-    function onSubmit() {
+
+    // 게시글 작성
+    function insertBoard() {
+
+        var data = $('form').serializeJSON();
+        console.log(data);
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/boards",
+            data: data,
+            dataType: 'json',
+            // async: true,
+            success: function (data) {
+                // console.table(data);
+                alert(data.message);
+
+                if(data.result) window.location = "/";
+            },
+            error: function (json) {
+                console.log(json);
+                alert('저장 중 오류가 발생하였습니다');
+            }
+        })
+    }
+
+    // 게시글 수정
+    function updateBoard() {
 
         var data = $('form').serializeJSON();
         console.log(data);

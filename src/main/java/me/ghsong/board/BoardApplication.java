@@ -61,7 +61,7 @@ public class BoardApplication {
                 Comment comment = Comment.builder()
                         .commentContents("댓글 " + i)
                         .board(board)
-                        .member(member)
+                        .member(members)
                         .build();
 
                 commentRepository.save(comment);

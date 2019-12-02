@@ -1,8 +1,8 @@
-package me.ghsong.board.service;
+package me.ghsong.board.config.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.ghsong.board.config.CustomUserDetails;
+import me.ghsong.board.config.security.CustomUserDetails;
 import me.ghsong.board.entity.Member;
 import me.ghsong.board.entity.Role;
 import me.ghsong.board.repository.MemberRepository;

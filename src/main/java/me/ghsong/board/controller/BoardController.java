@@ -3,7 +3,7 @@ package me.ghsong.board.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.ghsong.board.common.ResultResponse;
-import me.ghsong.board.config.CustomUserDetails;
+import me.ghsong.board.config.security.CustomUserDetails;
 import me.ghsong.board.dto.BoardDto;
 import me.ghsong.board.entity.Board;
 import me.ghsong.board.entity.Comment;
@@ -18,6 +18,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -45,12 +46,26 @@ public class BoardController {
     private final MemberRepository memberRepository;
 
 
+    /**
+     * 게시판 리스트 화면
+     *
+     * @return
+     */
     @GetMapping
     public String getBoardView() {
         log.info("::: getBoardView :::");
         return "board/board";
     }
 
+
+    /**
+     * 게시글 입력폼 화면
+     *
+     * @param customUserDetails
+     * @param boardSeq
+     * @param model
+     * @return
+     */
     @GetMapping(value = {"/form", "/form/{boardSeq}"})
     public String getBoardFormView(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable(required = false) Long boardSeq, Model model) {
         log.info("::: getBoardFormView :::");
@@ -72,6 +87,13 @@ public class BoardController {
         return "board/form";
     }
 
+
+    /**
+     * 게시글 리스트
+     *
+     * @param pageable
+     * @return
+     */
     @GetMapping("/lists")
     @ResponseBody
     public ResponseEntity getBoards(@PageableDefault Pageable pageable) {
@@ -83,6 +105,14 @@ public class BoardController {
         return ResponseEntity.ok(boardList);
     }
 
+
+    /**
+     * 게시글 작성
+     *
+     * @param customUserDetails
+     * @param boardDto
+     * @return
+     */
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity insertBoard(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody BoardDto boardDto) {
@@ -108,6 +138,14 @@ public class BoardController {
         return ResponseEntity.ok(resultResponse);
     }
 
+
+    /**
+     * 게시글 수정
+     *
+     * @param customUserDetails
+     * @param boardDto
+     * @return
+     */
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity updateBoard(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody BoardDto boardDto) {
@@ -135,6 +173,16 @@ public class BoardController {
         return ResponseEntity.ok(resultResponse);
     }
 
+
+    /**
+     * 게시글 자세히보기 화면
+     *
+     * @param customUserDetails
+     * @param boardSeq
+     * @param model
+     * @param pageable
+     * @return
+     */
     @GetMapping("/{boardSeq}")
     public String getBoardDetailView(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                                      @PathVariable Long boardSeq, Model model,
@@ -151,8 +199,11 @@ public class BoardController {
         log.debug("총 element 수 : {}, 전체 page 수 : {}, 페이지에 표시할 element 수 : {}, 현재 페이지 index : {}, 현재 페이지의 element 수 : {}",
                 comments.getTotalElements(), comments.getTotalPages(), comments.getSize(), comments.getNumber(), comments.getNumberOfElements());
 
+
         if (customUserDetails != null) {
-            model.addAttribute("owener", board.getMember().getMemberSeq().equals(customUserDetails.getMemberSeq()));
+            final Long memberSeq = customUserDetails.getMemberSeq();
+            model.addAttribute("owener", board.getMember().getMemberSeq().equals(memberSeq));
+            model.addAttribute("memberSeq", memberSeq);
         }
         model.addAttribute("boardSeq", board.getBoardSeq());
         model.addAttribute("boardTitle", board.getBoardTitle());
@@ -161,6 +212,14 @@ public class BoardController {
         return "board/view";
     }
 
+
+    /**
+     * 게시글 삭제
+     *
+     * @param customUserDetails
+     * @param boardSeq
+     * @return
+     */
     @DeleteMapping(value = "/{boardSeq}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity deleteBoard(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Long boardSeq) {
         log.info("::: deleteBoard :::");
@@ -182,7 +241,14 @@ public class BoardController {
                 댓글
      ************************** */
 
-
+    /**
+     * 댓글 등록
+     *
+     * @param boardSeq
+     * @param customUserDetails
+     * @param params
+     * @return
+     */
     @PostMapping("/{boardSeq}/comments")
     public ResponseEntity insertBoardComment(@PathVariable Long boardSeq,
                                              @AuthenticationPrincipal CustomUserDetails customUserDetails,
@@ -202,27 +268,59 @@ public class BoardController {
 
         final Comment insertComment = commentService.insertComment(comment);
 
-        if(insertComment != null){
+        if (insertComment != null) {
             return ResponseEntity.ok(createResultResponse(true, "성공"));
-        }else{
+        } else {
             return ResponseEntity.ok(createResultResponse(false, "실패"));
         }
 
     }
 
+
+    /**
+     * 댓글 수정
+     *
+     * @param boardSeq
+     * @param commentSeq
+     * @return
+     */
     @PutMapping("/{boardSeq}/comments/{commentSeq}")
-    public ResponseEntity updateBoardComment(@PathVariable Long boardSeq, @PathVariable Long commentSeq) {
+    public ResponseEntity updateBoardComment(@PathVariable Long boardSeq, @PathVariable Long commentSeq, @RequestBody Map params) {
         log.info("::: updateBoardComment :::");
+        log.debug("params : {}", params);
 
+        final Comment comment = commentService.getComment(commentSeq);
+        if (comment == null) {
+            return ResponseEntity.ok(createResultResponse(false, "존재하지 않는 댓글"));
+        } else {
+            comment.setCommentContents(params.get("commentContents").toString());
 
-        return ResponseEntity.ok(null);
+            final Comment updateComment = commentService.updateComment(comment);
+            if (updateComment != null) {
+                return ResponseEntity.ok(createResultResponse(true, "성공"));
+            } else {
+                return ResponseEntity.ok(createResultResponse(true, "성공"));
+            }
+        }
     }
 
+
+    /**
+     * 댓글 삭제
+     *
+     * @param boardSeq
+     * @param commentSeq
+     * @return
+     */
     @DeleteMapping("/{boardSeq}/comments/{commentSeq}")
     public ResponseEntity deleteBoardComment(@PathVariable Long boardSeq, @PathVariable Long commentSeq) {
         log.info("::: deleteBoardComment :::");
 
-
-        return ResponseEntity.ok(null);
+        final Comment deleteComment = commentService.deleteComment(commentService.getComment(commentSeq));
+        if (deleteComment != null) {
+            return ResponseEntity.ok(createResultResponse(true, "성공"));
+        } else {
+            return ResponseEntity.ok(createResultResponse(true, "성공"));
+        }
     }
 }

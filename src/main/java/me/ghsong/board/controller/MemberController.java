@@ -2,7 +2,7 @@ package me.ghsong.board.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.ghsong.board.config.CustomUserDetails;
+import me.ghsong.board.config.security.CustomUserDetails;
 import me.ghsong.board.entity.Member;
 import me.ghsong.board.repository.MemberRepository;
 import me.ghsong.board.service.MemberService;
@@ -11,8 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.security.Principal;
 
 /**
  * @author : Song.gunho

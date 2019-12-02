@@ -1,4 +1,4 @@
-package me.ghsong.board.config;
+package me.ghsong.board.config.security;
 
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
