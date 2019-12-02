@@ -2,7 +2,6 @@ package me.ghsong.board.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -14,7 +13,6 @@ import java.time.LocalDateTime;
  * @author : Song.gunho
  * <p>
  * Date: 2019-11-26
- * Copyright(©) 2019 by ATOSTUDY.
  */
 @Getter
 @MappedSuperclass

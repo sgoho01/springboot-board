@@ -2,7 +2,6 @@ package me.ghsong.board.service;
 
 import lombok.RequiredArgsConstructor;
 import me.ghsong.board.entity.Board;
-import me.ghsong.board.entity.Comment;
 import me.ghsong.board.repository.BoardRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

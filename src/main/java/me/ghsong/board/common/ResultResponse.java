@@ -6,7 +6,6 @@ import lombok.*;
  * @author : Song.gunho
  * <p>
  * Date: 2019-11-25
- * Copyright(©) 2019 by ATOSTUDY.
  */
 @Getter @Setter @Builder
 @AllArgsConstructor @NoArgsConstructor
