@@ -198,15 +198,12 @@ public class BoardController {
         log.debug("총 element 수 : {}, 전체 page 수 : {}, 페이지에 표시할 element 수 : {}, 현재 페이지 index : {}, 현재 페이지의 element 수 : {}",
                 comments.getTotalElements(), comments.getTotalPages(), comments.getSize(), comments.getNumber(), comments.getNumberOfElements());
 
-
         if (customUserDetails != null) {
             final Long memberSeq = customUserDetails.getMemberSeq();
             model.addAttribute("owener", board.getMember().getMemberSeq().equals(memberSeq));
             model.addAttribute("memberSeq", memberSeq);
         }
-        model.addAttribute("boardSeq", board.getBoardSeq());
-        model.addAttribute("boardTitle", board.getBoardTitle());
-        model.addAttribute("boardContents", board.getBoardContents());
+        model.addAttribute("board", board);
         model.addAttribute("boardComments", comments);
         return "board/view";
     }

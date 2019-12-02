@@ -24,11 +24,11 @@
         <div class="row">
             <div class="col-6">
                 <form name="boardForm" id="boardForm">
-                    <input type="hidden" name="boardSeq" id="boardSeq" th:value="${boardSeq}"/>
+                    <input type="hidden" name="boardSeq" id="boardSeq" th:value="${board.boardSeq}"/>
                     <div class="form-group">
                         <label for="boardTitle">제목</label>
                         <input type="text" class="form-control" id="boardTitle" name="boardTitle" placeholder="제목"
-                               th:value="${boardTitle}" readonly>
+                               th:value="${board.boardTitle}" readonly>
                         <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
                             else.
                         </small>-->
@@ -36,15 +36,14 @@
                     <div class="form-group">
                         <label for="boardContents">내용</label>
                         <textarea class="form-control" id="boardContents" name="boardContents" rows="5"
-                                  th:text="${boardContents}" readonly></textarea>
+                                  th:text="${board.boardContents}" readonly></textarea>
                     </div>
                     <!--<div class="form-check">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
                         <label class="form-check-label" for="exampleCheck1">Check me out</label>
                     </div>-->
                     <a type="button" class="btn btn-secondary" th:href="@{/boards}">목록</a>
-                    <a type="submit" th:if="${owener}" class="btn btn-primary"
-                       th:href="@{/boards/form/{boardSeq}(boardSeq=${boardSeq})}">수정</a>
+                    <a type="submit" th:if="${owener}" class="btn btn-primary" th:href="@{/boards/form/{boardSeq}(boardSeq=${board.boardSeq})}">수정</a>
                     <a type="button" th:if="${owener}" class="btn btn-danger" onclick="deleteBoard()">삭제</a>
                 </form>
             </div>
@@ -68,9 +67,10 @@
 
             <!-- 댓글 리스트 -->
             <th:block th:each="comment : ${boardComments}">
-                <div class="row">
+                <div class="row mb-2">
                     <div class="col-10">
                         <textarea name="commentContents" class="form-control" th:text="${comment.commentContents}" readonly th:commentSeq="${comment.commentSeq}"></textarea>
+                        <small class="form-text text-muted" th:text="|작성자 : ${comment.member.getMemberId()}, 작성일 : ${comment.getCreatedAt()}|"></small>
                     </div>
                     <div class="col-2" th:if="${memberSeq == comment.member.memberSeq}">
                         <a role="button" class="btn btn-sm btn-danger" href="javascript:" th:name="|deleteComment_${comment.commentSeq}|" th:onclick="|deleteComment('${comment.commentSeq}')|">삭제</a>
@@ -81,34 +81,27 @@
                 </div>
             </th:block>
 
-            <ul class="pagination"
-                th:with="start=${T(Math).floor(boardComments.number/10)*10 + 1}, last=(${start + 9 < boardComments.totalPages ? start + 9 : boardComments.totalPages})">
+            <ul class="pagination" th:with="start=${T(Math).floor(boardComments.number/10)*10 + 1}, last=(${start + 9 < boardComments.totalPages ? start + 9 : boardComments.totalPages})">
                 <li class="page-item">
-                    <a th:href="@{/boards/{boardSeq}(boardSeq=${boardSeq},page=1)}" aria-label="First"
-                       class="page-link">
+                    <a th:href="@{/boards/{boardSeq}(boardSeq=${boardSeq},page=1)}" aria-label="First" class="page-link">
                         <span aria-hidden="true">First</span>
                     </a>
                 </li>
                 <li th:class="${boardComments.first} ? 'disabled page-item' : 'page-item'">
-                    <a th:href="${boardComments.first} ? '#' :@{/boards/{boardSeq}(boardSeq=${boardSeq},page=${boardComments.number})}"
-                       aria-label="Previous" class="page-link">
+                    <a th:href="${boardComments.first} ? '#' :@{/boards/{boardSeq}(boardSeq=${boardSeq},page=${boardComments.number})}" aria-label="Previous" class="page-link">
                         <span aria-hidden="true">&lt;</span>
                     </a>
                 </li>
-                <li th:each="page: ${#numbers.sequence(start, last)}"
-                    th:class="${page == boardComments.number + 1} ? 'active page-item' : 'page-item'">
-                    <a th:text="${page}" th:href="@{/boards/{boardSeq}(boardSeq=${boardSeq},page=${page})}"
-                       class="page-link"></a>
+                <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == boardComments.number + 1} ? 'active page-item' : 'page-item'">
+                    <a th:text="${page}" th:href="@{/boards/{boardSeq}(boardSeq=${boardSeq},page=${page})}" class="page-link"></a>
                 </li>
                 <li class="page-item">
-                    <a th:href="${boardComments.last} ? '#' : @{/boards/{boardSeq}(boardSeq=${boardSeq},page=${boardComments.number + 2})}"
-                       aria-label="Next" class="page-link">
+                    <a th:href="${boardComments.last} ? '#' : @{/boards/{boardSeq}(boardSeq=${boardSeq},page=${boardComments.number + 2})}" aria-label="Next" class="page-link">
                         <span aria-hidden="true">&gt;</span>
                     </a>
                 </li>
                 <li class="page-item">
-                    <a th:href="@{/boards/{boardSeq}(boardSeq=${boardSeq},page=${boardComments.totalPages})}"
-                       aria-label="Last" class="page-link">
+                    <a th:href="@{/boards/{boardSeq}(boardSeq=${boardSeq},page=${boardComments.totalPages})}" aria-label="Last" class="page-link">
                         <span aria-hidden="true">Last</span>
                     </a>
                 </li>
