@@ -86,7 +86,7 @@
         $.ajax({
             type: "PUT",
             contentType: "application/json",
-            url: "/boards",
+            url: "/boards/" + $("#boardSeq").val(),
             data: data,
             dataType: 'json',
             // async: true,

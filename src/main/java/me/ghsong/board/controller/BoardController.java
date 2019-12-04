@@ -142,18 +142,21 @@ public class BoardController {
      * 게시글 수정
      *
      * @param customUserDetails
+     * @param boardSeq
      * @param boardDto
      * @return
      */
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{boardSeq}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity updateBoard(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody BoardDto boardDto) {
+    public ResponseEntity updateBoard(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                      @PathVariable Long boardSeq,
+                                      @RequestBody BoardDto boardDto) {
         log.info("::: updateBoard :::");
         log.debug("customUserDetails : {}, boardDto : {}", customUserDetails, boardDto.toString());
 
         ResultResponse resultResponse;
 
-        final Board board = boardRepository.findById(boardDto.getBoardSeq()).orElse(null);
+        final Board board = boardRepository.findById(boardSeq).orElse(null);
         if (board == null) {
             resultResponse = createResultResponse(false, "존재하지 않는 게시글");
         } else {
