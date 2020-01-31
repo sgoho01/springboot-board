@@ -229,7 +229,7 @@ public class BoardController {
             return ResponseEntity.ok(createResultResponse(false, "삭제할 수 없는 게시글입니다."));
         } else {
             // 삭제처리
-            boardRepository.save(one);
+            boardService.deleteBoard(one);
             return ResponseEntity.ok(createResultResponse(true, "삭제 되었습니다."));
         }
     }

@@ -38,5 +38,10 @@ public class BoardService {
         return board;
     }
 
+    public Board deleteBoard(Board board){
+        board.onDelete();
+        return boardRepository.save(board);
+    }
+
 
 }
